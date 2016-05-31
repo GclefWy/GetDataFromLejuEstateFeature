@@ -59,6 +59,7 @@ namespace sinaData
                 }
 
                 int tryCountFirst = 10;
+                string URL = @"http://data.house.sina.com.cn/api/api.agent.php";
 
                 while (tryCountFirst>0)
                 {
@@ -76,7 +77,7 @@ namespace sinaData
                     param.Add("encode", "utf-8");
                     //param.Add("module", "houseinfo");
 
-                    string URL = @"http://data.house.sina.com.cn/api/api.agent.php";
+                    
                     string resultObjName;
 
                     if (startTimeStamp == 0)
@@ -91,7 +92,7 @@ namespace sinaData
                         param.Add("start", startTimeStamp.ToString());
                     }
 
-s                    string rtn = HttpHelper.getHttp(URL, param);
+                   string rtn = HttpHelper.getHttp(URL, param);
 
                     Console.WriteLine(rtn);
                     WriteLog("getData : " + rtn);
