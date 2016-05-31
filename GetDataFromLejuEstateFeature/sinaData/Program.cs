@@ -58,40 +58,40 @@ namespace sinaData
                     startTimeStamp = Int32.Parse(ds.Tables[0].Rows[0][0].ToString());
                 }
 
-                Dictionary<string, string> param = new Dictionary<string, string>();
-                //param.Add("timestamp", "1463130801");
-                //param.Add("noncestr", "ibReDxJYb4QoMKTC");
-                //param.Add("city", "bj");
-                int timeStamp = SinaSignHelper.ConvertDateTimeInt(DateTime.Now);
-                param.Add("timestamp", timeStamp.ToString());
-                param.Add("noncestr", SinaSignHelper.generateNonceStr(16));
-                param.Add("city", cityCode);
-                param.Add("signature", SinaSignHelper.getSignature(param, "6ba895293c27f610").ToLower());
-                param.Add("key", "6ba895293c27f610");
-                param.Add("return", "json");
-                param.Add("encode", "utf-8");
-                //param.Add("module", "houseinfo");
-
-                string URL = @"http://data.house.sina.com.cn/api/api.agent.php";
-                string resultObjName;
-
-                if (startTimeStamp == 0)
-                {
-                    param.Add("module", "get_hids");
-                    resultObjName = "get_hids";
-                }
-                else
-                {
-                    param.Add("module", "update_hids");
-                    resultObjName = "update_hids";
-                    param.Add("start", startTimeStamp.ToString());
-                }
-
                 int tryCountFirst = 10;
 
                 while (tryCountFirst>0)
                 {
-                    string rtn = HttpHelper.getHttp(URL, param);
+                    Dictionary<string, string> param = new Dictionary<string, string>();
+                    //param.Add("timestamp", "1463130801");
+                    //param.Add("noncestr", "ibReDxJYb4QoMKTC");
+                    //param.Add("city", "bj");
+                    int timeStamp = SinaSignHelper.ConvertDateTimeInt(DateTime.Now);
+                    param.Add("timestamp", timeStamp.ToString());
+                    param.Add("noncestr", SinaSignHelper.generateNonceStr(16));
+                    param.Add("city", cityCode);
+                    param.Add("signature", SinaSignHelper.getSignature(param, "6ba895293c27f610").ToLower());
+                    param.Add("key", "6ba895293c27f610");
+                    param.Add("return", "json");
+                    param.Add("encode", "utf-8");
+                    //param.Add("module", "houseinfo");
+
+                    string URL = @"http://data.house.sina.com.cn/api/api.agent.php";
+                    string resultObjName;
+
+                    if (startTimeStamp == 0)
+                    {
+                        param.Add("module", "get_hids");
+                        resultObjName = "get_hids";
+                    }
+                    else
+                    {
+                        param.Add("module", "update_hids");
+                        resultObjName = "update_hids";
+                        param.Add("start", startTimeStamp.ToString());
+                    }
+
+s                    string rtn = HttpHelper.getHttp(URL, param);
 
                     Console.WriteLine(rtn);
                     WriteLog("getData : " + rtn);
