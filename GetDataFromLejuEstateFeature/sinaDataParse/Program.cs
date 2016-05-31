@@ -63,11 +63,34 @@ namespace sinaDataParse
                                 d_price_trend_analysis = (JArray)house_price_trend["price_trend_analysis"];
                             }
 
+                            JArray d_tag = new JArray();
+                            if (baseinfo["tags"] is JObject)
+                            {
+                                foreach (JProperty jp in (baseinfo["tags"]))
+                                {
+                                    d_tag.Add(jp.Value);
+                                }
+
+                            }
+                            else
+                            {
+                                d_tag = (JArray)baseinfo["tags"];
+                            }
+
                             string d_EstateName = (string)baseinfo["name"];
                             string d_EstateAddress = (string)baseinfo["address"];
                             string d_EstatePic = (string)baseinfo["pic_s320"];
                             string d_SaleStateTag = "在售";
-                            string d_EstateTag = (string)baseinfo["address"];
+
+                            string d_EstateTag = "";
+
+                            foreach (JObject jtag in d_tag)
+                            {
+                                 d_EstateTag += (string)jtag["title"]+",";
+                            }
+
+                            d_EstateTag = d_EstateTag.Substring(0, d_EstateTag.Length - 1);
+
                             string d_RoomType = (string)baseinfo["main_housetype"];
                             string d_OpenTime = (string)baseinfo["opentime"];
                             string d_LastPriceLabel = "";
@@ -88,9 +111,39 @@ namespace sinaDataParse
                             }
                             string d_RegionLastPriceLabel = "";
                             string d_RegionLastPriceValue = (string)district_price_trend["price_avg_now"] + "|" + (string)district_price_trend["trend_descrip"];
-                            string d_HighPriceEstateCount = (string)district_price_trend["up_total"];
-                            string d_LowPriceEstateCount = (string)district_price_trend["down_total"];
-                            string d_FlatPriceEstateCount = (string)district_price_trend["flat_total"];
+
+
+                            string d_HighPriceEstateCount = "0";
+                            string d_LowPriceEstateCount = "0";
+                            string d_FlatPriceEstateCount = "0";
+
+                            //d_HighPriceEstateCount
+                            try
+                            {
+                                d_HighPriceEstateCount = (string)district_price_trend["pk_list"]["up_total"];
+                            }
+                            catch
+                            {
+                                d_HighPriceEstateCount = "0";
+                            }
+
+                            try
+                            {
+                                d_LowPriceEstateCount = (string)district_price_trend["pk_list"]["down_total"];
+                            }
+                            catch
+                            {
+                                d_LowPriceEstateCount = "0";
+                            }
+
+                            try
+                            {
+                                d_FlatPriceEstateCount = (string)district_price_trend["pk_list"]["flat_total"];
+                            }
+                            catch
+                            {
+                                d_FlatPriceEstateCount = "0";
+                            }
 
                             //如果highcount 〉0 则做list
 
@@ -154,7 +207,11 @@ namespace sinaDataParse
                             string d_PriceAnalysisValue = "";
                             try
                             {
-                                d_PriceAnalysisValue = (string)district_price_trend["pk_list"]["total_new"] + "|" + (string)district_price_trend["pk_list"]["up_rate"] + "|" + (string)district_price_trend["pk_list"]["down_rate"];
+                                d_PriceAnalysisValue = (string)district_price_trend["pk_list"]["total_new"] + "|" 
+                                    + (string)district_price_trend["pk_list"]["up_total"] + "|"
+                                    + (string)district_price_trend["pk_list"]["up_rate"] + "|"
+                                     + (string)district_price_trend["pk_list"]["down_total"] + "|"
+                                    + (string)district_price_trend["pk_list"]["down_rate"];
                             }
                             catch
                             {
