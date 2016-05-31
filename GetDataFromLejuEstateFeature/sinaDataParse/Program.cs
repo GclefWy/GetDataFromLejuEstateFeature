@@ -84,7 +84,7 @@ namespace sinaDataParse
                             }
                             if (d_TrendPriceValue.Length > 0)
                             {
-                                d_TrendPriceValue = d_TrendPriceValue.Substring(1, d_TrendPriceValue.Length - 1);
+                                d_TrendPriceValue = d_TrendPriceValue.Substring(0, d_TrendPriceValue.Length - 1);
                             }
                             string d_RegionLastPriceLabel = "";
                             string d_RegionLastPriceValue = (string)district_price_trend["price_avg_now"] + "|" + (string)district_price_trend["trend_descrip"];
@@ -103,7 +103,7 @@ namespace sinaDataParse
                                     {
                                         d_HighPriceEstate += item["hname"] + "|" + item["price"] + "|";
                                     }
-                                    d_HighPriceEstate = d_HighPriceEstate.Substring(1, d_HighPriceEstate.Length - 1);
+                                    d_HighPriceEstate = d_HighPriceEstate.Substring(0, d_HighPriceEstate.Length - 1);
                                 }
                                 catch
                                 {
@@ -122,7 +122,7 @@ namespace sinaDataParse
                                     {
                                         d_LowPriceEstate += item["hname"] + "|" + item["price"] + "|";
                                     }
-                                    d_LowPriceEstate = d_LowPriceEstate.Substring(1, d_LowPriceEstate.Length - 1);
+                                    d_LowPriceEstate = d_LowPriceEstate.Substring(0, d_LowPriceEstate.Length - 1);
                                 }
                                 catch
                                 {
@@ -141,7 +141,7 @@ namespace sinaDataParse
                                     {
                                         d_FlatPriceEstate += item["hname"] + "|" + item["price"] + "|";
                                     }
-                                    d_FlatPriceEstate = d_FlatPriceEstate.Substring(1, d_FlatPriceEstate.Length - 1);
+                                    d_FlatPriceEstate = d_FlatPriceEstate.Substring(0, d_FlatPriceEstate.Length - 1);
                                 }
                                 catch
                                 {
