@@ -87,35 +87,44 @@ namespace sinaData
                     param.Add("start", startTimeStamp.ToString());
                 }
 
-                string rtn = HttpHelper.getHttp(URL, param);
+                int tryCount = 10;
 
-                Console.WriteLine(rtn);
-                WriteLog("getData : " + rtn);
-
-                if (rtn.Length > 0)
+                while (tryCount>0)
                 {
+                    string rtn = HttpHelper.getHttp(URL, param);
 
-                    try
+                    Console.WriteLine(rtn);
+                    WriteLog("getData : " + rtn);
+
+                    if (rtn.Length > 0)
                     {
-                        JObject jo = JObject.Parse(rtn);
 
-                        for (int i = 0; i < jo[resultObjName].Count(); i++)
+                        try
                         {
-                            string d_hid = (string)jo[resultObjName][i];
+                            JObject jo = JObject.Parse(rtn);
 
-                            sql = "delete from TB_ESTATE_HID_LIST where city = '" + cityCode + "' and hid=" + d_hid + "; ";
-                            sql += "insert into TB_ESTATE_HID_LIST ([hid],[city],[update_timestamp]) ";
-                            sql += "values (" + d_hid + ",'" + cityCode + "'," + timeStamp.ToString() + "); ";
+                            for (int i = 0; i < jo[resultObjName].Count(); i++)
+                            {
+                                string d_hid = (string)jo[resultObjName][i];
 
-                            Console.WriteLine(sql);
+                                sql = "delete from TB_ESTATE_HID_LIST where city = '" + cityCode + "' and hid=" + d_hid + "; ";
+                                sql += "insert into TB_ESTATE_HID_LIST ([hid],[city],[update_timestamp]) ";
+                                sql += "values (" + d_hid + ",'" + cityCode + "'," + timeStamp.ToString() + "); ";
 
-                            SimpleDataHelper.Excsql(SimpleDataHelper.MSConnectionString, sql);
+                                Console.WriteLine(sql);
+
+                                SimpleDataHelper.Excsql(SimpleDataHelper.MSConnectionString, sql);
+                            }
+
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            WriteLog(ex.Message);
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        WriteLog(ex.Message);
-                    }
+
+                    tryCount--;
                 }
 
 
