@@ -87,9 +87,9 @@ namespace sinaData
                     param.Add("start", startTimeStamp.ToString());
                 }
 
-                int tryCount = 10;
+                int tryCountFirst = 10;
 
-                while (tryCount>0)
+                while (tryCountFirst>0)
                 {
                     string rtn = HttpHelper.getHttp(URL, param);
 
@@ -124,7 +124,7 @@ namespace sinaData
                         }
                     }
 
-                    tryCount--;
+                    tryCountFirst--;
                 }
 
 
