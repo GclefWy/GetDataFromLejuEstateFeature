@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace sinaData
@@ -126,6 +127,10 @@ namespace sinaData
                     }
 
                     tryCountFirst--;
+
+                    Random ran = new Random();
+                    int RanKey = ran.Next(100, 1500);
+                    Thread.Sleep(RanKey);
                 }
 
 

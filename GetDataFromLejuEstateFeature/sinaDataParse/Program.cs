@@ -291,7 +291,7 @@ namespace sinaDataParse
                             SimpleDataHelper.Excsql(SimpleDataHelper.MSConnectionString, sql2);
 
                             DataTable dt = new DataTable();
-                            dt.Columns.Add("hid", typeof(Int32));
+                            ;          dt.Columns.Add("hid", typeof(Int32));
                             dt.Columns.Add("EstateName", typeof(string));
                             dt.Columns.Add("MarkDate", typeof(string));
                             dt.Columns.Add("BeginPrice", typeof(double));
