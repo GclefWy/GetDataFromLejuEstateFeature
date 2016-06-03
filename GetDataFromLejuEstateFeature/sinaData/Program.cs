@@ -91,6 +91,7 @@ namespace sinaData
                         param.Add("module", "update_hids");
                         resultObjName = "update_hids";
                         param.Add("start", startTimeStamp.ToString());
+                        param.Add("end", timeStamp.ToString());
                     }
 
                    string rtn = HttpHelper.getHttp(URL, param);
