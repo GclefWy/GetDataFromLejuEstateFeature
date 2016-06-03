@@ -80,7 +80,23 @@ namespace sinaDataParse
                             string d_EstateName = (string)baseinfo["name"];
                             string d_EstateAddress = (string)baseinfo["address"];
                             string d_EstatePic = (string)baseinfo["pic_s320"];
-                            string d_SaleStateTag = "在售";
+
+                            string d_sale_schedule = (string)baseinfo["sale_schedule"];
+                            string[] sArray = d_sale_schedule.Split(',');
+                            int max_sale_schedule = 0;
+                            foreach (string s in sArray)
+                            {
+                                if (int.Parse(s) > max_sale_schedule)
+                                {
+                                    max_sale_schedule = int.Parse(s);
+                                }
+                            }
+                            string[] sale_schedule_Array = {"地块","开工","售楼处开放","排号","选房","开盘","顺销","售罄","交房" };
+                            string d_SaleStateTag = "";
+                            if ((0<max_sale_schedule) && (max_sale_schedule<10))
+                            {
+                                d_SaleStateTag = sale_schedule_Array[max_sale_schedule-1];
+                            }
 
                             string d_EstateTag = "";
 
@@ -110,7 +126,7 @@ namespace sinaDataParse
                                 d_TrendPriceValue = d_TrendPriceValue.Substring(0, d_TrendPriceValue.Length - 1);
                             }
                             string d_RegionLastPriceLabel = "";
-                            string d_RegionLastPriceValue = (string)district_price_trend["price_avg_now"] + "|" + (string)district_price_trend["trend_descrip"];
+                            string d_RegionLastPriceValue = (string)district_price_trend["price_avg_now"] + "|" + (string)district_price_trend["trend_descrip"] + "|" + int.Parse("0"+(string)district_price_trend["total"]).ToString() + "|" + int.Parse("0" + (string)district_price_trend["update_total"]).ToString() + "|" + int.Parse("0" + (string)district_price_trend["down_total"]).ToString() + "|" + int.Parse("0" + (string)district_price_trend["flat_total"]).ToString();
 
 
                             string d_HighPriceEstateCount = "0";
